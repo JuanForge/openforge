@@ -1,2 +1,4 @@
-# openforge
-OpenForge
+# Build :
+```
+docker build -t <name>:<version> .
+```
