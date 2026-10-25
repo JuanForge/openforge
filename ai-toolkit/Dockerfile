@@ -1,7 +1,7 @@
 FROM docker.io/nvidia/cuda:13.3.1-cudnn-devel-ubuntu24.04
 # 12.8.1-devel-ubuntu24.04
 
-ARG AI_TOOLKIT_COMMIT=fb7c14b2883bd8f33bc55c47193254f1f7f9666d
+ARG AI_TOOLKIT_COMMIT=73ebae13a468942ded8b47991b5d56eeeea25c36
 
 RUN userdel -r ubuntu \
     && useradd -m -u 1000 app \
@@ -31,8 +31,9 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# c 14f8f95090689b585093e5aaf48bc1e2e0a67ea4
 WORKDIR /tmp
-RUN curl -sL https://deb.nodesource.com/setup_23.x | bash \
+RUN curl -sL https://deb.nodesource.com/setup_24.x | bash \
     && apt-get update \
     && apt-get install -y nodejs \
     && apt-get clean \
@@ -61,6 +62,10 @@ RUN /app/.venv/bin/python -c "import torch; print(f'torch : {torch.__version__}'
     natten==0.21.7+torch2130cu130 --find-links https://whl.natten.org \
     https://github.com/mjun0812/flash-attention-prebuild-wheels/releases/download/v0.9.47/flash_attn-2.8.3+cu130torch2.13-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl \
     && python -c "import flash_attn, natten, torchcodec; print('accelerators OK:', flash_attn.__version__, natten.__version__, torchcodec.__version__)"
+
+# c 2d4c89d39253e42bb6c6ff17549174bc3ebb9422
+RUN /app/.venv/bin/python -m pip install --no-cache-dir  flash-linear-attention==0.5.2 && \
+    /app/.venv/bin/python -c "import fla, transformers; print('fla OK:', fla.__version__, 'transformers', transformers.__version__)"
 
 WORKDIR /app/ui
 RUN npm ci \
