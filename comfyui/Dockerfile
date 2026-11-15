@@ -35,12 +35,10 @@ RUN git clone https://github.com/comfyanonymous/ComfyUI.git . && \
 
 RUN python3 -m venv /app/.venv
 
-RUN git clone https://github.com/Comfy-Org/ComfyUI-Manager ./custom_nodes/ComfyUI-Manager
-
 RUN /app/.venv/bin/python -m pip install --no-cache-dir torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu130
 
 RUN /app/.venv/bin/python -m pip install --no-cache-dir -r requirements.txt
-RUN /app/.venv/bin/python -m pip install --no-cache-dir -r ./custom_nodes/ComfyUI-Manager/requirements.txt
+RUN /app/.venv/bin/python -m pip install --no-cache-dir -r manager_requirements.txt
 
 EXPOSE 8188
 
