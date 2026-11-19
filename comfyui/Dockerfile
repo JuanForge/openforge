@@ -1,7 +1,7 @@
 FROM docker.io/nvidia/cuda:13.3.1-cudnn-devel-ubuntu24.04
 # 13.3.1-cudnn-runtime-ubuntu24.04
 
-ARG COMFYUI_VERSION=v0.45.0
+ARG COMFYUI_VERSION=v0.46.0
 
 RUN userdel -r ubuntu \
     && useradd -m -u 1000 app \
